@@ -7,9 +7,10 @@
     <title>Search</title>
 </head>
 <body>
-    <form method="get" name="search" id="search" action="/search">
-        <input type="text" name="query" placeholder="Search.."/>
-        <input type="submit" value="Go" />
-    </form>
+    {% for item in resp %}
+        <p><b>{{ item['created_date'] }}</b></p>
+        <p>{{ item['text'] }}</p>
+        <br>
+    {% endfor %}
 </body>
 </html>
