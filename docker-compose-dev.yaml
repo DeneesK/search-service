@@ -7,10 +7,9 @@ services:
     env_file:
       - .env
     ports:
-      - '{&REDIS_PORT}:6379'
+      - '${REDIS_PORT}:6379'
     volumes: 
       - cache:/var/lib/redis/data
-
   db:
     image: postgres:14.5-alpine
     restart: always
@@ -19,19 +18,25 @@ services:
     env_file:
       - .env
     ports:
-      - "${DB_PORT}:5432"
+      - "${POSTGRES_PORT}:5432"
     depends_on:
-      - cashe
-
+      - cache
+  elastic:
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+      volumes:
+        - elastic:/usr/share/elasticsearch/data
+      env_file:
+        - .env
+      ports:
+        - "9200:9200"
   etl:
     build:
       context: ./ETL
     env_file:
-      - ./ETL/.env
+      - .env
     command: "make start"
     depends_on:
-      - db    
-
+      - db
   admin:
     build:
       context: ./DjangoAdmin/src
@@ -39,10 +44,22 @@ services:
     env_file:
       - .env
     ports:
-      -"8001:8000"
+      - "8001:8000"
     command: "make start"
     depends_on:
       - etl
+  
+  front:
+    build:
+      context: ./FlaskFront/src
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8002:8000"
+    command: "make start"
 
 volumes:
   db:
+  cache:
+  elastic:
