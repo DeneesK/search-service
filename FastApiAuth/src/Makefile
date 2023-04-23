@@ -1,0 +1,4 @@
+start:
+	sleep 4
+	alembic upgrade head
+	python -m gunicorn --name url_service -k uvicorn.workers.UvicornWorker -w 2 -b 0.0.0.0:8000 main:app
