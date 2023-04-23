@@ -41,6 +41,8 @@ services:
     build:
       context: ./DjangoAdmin/src
     restart: always
+    volumes:
+      - static:/opt/src/conf/static
     env_file:
       - .env
     ports:
@@ -63,9 +65,11 @@ services:
       - "${DOCKER_API_PORT}:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - static:/static
     depends_on:
-      - storage
+      - admin
 volumes:
   db:
   cache:
   elastic:
+  static:
