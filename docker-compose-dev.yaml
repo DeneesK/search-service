@@ -57,7 +57,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8002:8000"
+      - "5000:5000"
     command: "make start"
   nginx:
     image: nginx:1.21.3-alpine
