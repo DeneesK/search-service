@@ -48,7 +48,6 @@ services:
     command: "make start"
     depends_on:
       - etl
-  
   front:
     build:
       context: ./FlaskFront/src
@@ -58,7 +57,14 @@ services:
     ports:
       - "8002:8000"
     command: "make start"
-
+  nginx:
+    image: nginx:1.21.3-alpine
+    ports:
+      - "${DOCKER_API_PORT}:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - storage
 volumes:
   db:
   cache:
