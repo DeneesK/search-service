@@ -10,7 +10,3 @@ class Post(BaseModel):
     text: str
     created_date: datetime
     rubrics: list
-
-
-class QueryIn(BaseModel):
-    query: str
