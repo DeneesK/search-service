@@ -8,5 +8,8 @@ ENV PYTHONPATH "${PYTHONPATH}:/opt/app/"
 
 COPY . .
 
-RUN pip install --upgrade pip \
+RUN apt-get update\
+	&& apt-get install -y netcat\
+	&& apt-get install -y make\ 
+	&& pip install --upgrade pip \
 	&& pip install --no-cache-dir -r requirements.txt
