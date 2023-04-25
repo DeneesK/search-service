@@ -11,7 +11,7 @@ def index():
         return render_template('index.html')
     elif request.method == 'POST':
         req = request.form.to_dict()
-        resp = requests.post('http://auth:8000/api/v1/get-token', data=req).json()
+        resp = requests.post('http://auth:8000/user/get-token', json=req).json()
         print(resp)
 
 
@@ -28,7 +28,7 @@ def create_user():
         return render_template('reg.html')
     elif request.method == 'POST':
         req = request.form.to_dict()
-        resp = requests.post('http://auth:8000/api/v1/registration', data=req).json()
+        resp = requests.post('http://auth:8000/user/registration', json=req).json()
         print(resp)
         return render_template('index.html')
 
