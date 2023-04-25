@@ -57,6 +57,8 @@ services:
     ports:
       - "5000:5000"
     command: "make start"
+    depends_on:
+      - etl
   search:
     build:
       context: ./FastApiSearch/src
@@ -64,6 +66,17 @@ services:
       - .env
     ports:
       - "8002:8000"
+    command: "make start"
+    depends_on:
+      - etl
+  auth:
+    build:
+      context:
+        ./FastApiAuth/src
+    env_file:
+      - .env
+    ports:
+      - "8003:8000"
     command: "make start"
     depends_on:
       - etl   
