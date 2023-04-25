@@ -13,9 +13,7 @@ def index():
 @app.route('/search/')
 def send_query():
     query = request.values.get('query')
-    r = requests.get(f'http://search:8000/api/v1/search?query={query}')
-    print(query)
-    resp = r.json()
+    resp = requests.get(f'http://search:8000/api/v1/search?query={query}').json()
     return render_template('search.html', resp=resp)
 
 
